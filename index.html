@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Para mi niña</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at top, #153d80 0%, #0b1f44 35%, #050b18 70%, #010204 100%);
+            font-family: Arial, sans-serif
+        }
+
+        #stage {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%
+        }
+
+        #heart {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+        }
+
+        .rose {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0;
+            transition: 1.8s ease;
+            transform: translate(-50%, 220px) scale(.2);
+            filter: drop-shadow(0 0 6px #58a6ff)
+        }
+
+        #msg {
+            position: absolute;
+            left: 50%;
+            top: 55%;
+            transform: translate(-50%, -50%);
+            width: 55%;
+            text-align: center;
+            color: #fff;
+            font-weight: bold;
+            line-height: 1.4;
+            font-size: clamp(14px, 2.8vw, 22px);
+            opacity: 0;
+            transition: opacity 2s;
+            text-shadow: 0 0 10px #69f;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .show {
+            opacity: 1
+        }
+
+        /* Aurora Boreal */
+
+        .aurora {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .aurora span {
+
+            position: absolute;
+
+            width: 140vw;
+            height: 45vh;
+
+            border-radius: 50%;
+
+            filter: blur(55px);
+
+            opacity: .35;
+
+            mix-blend-mode: screen;
+
+            animation: auroraMove 18s ease-in-out infinite alternate;
+
+        }
+
+        .aurora span:nth-child(1) {
+
+            left: -20vw;
+            top: -15vh;
+
+            background: linear-gradient(90deg,
+                    transparent,
+                    #00d4ff,
+                    #4d7cff,
+                    transparent);
+
+            transform: rotate(-12deg);
+
+        }
+
+        .aurora span:nth-child(2) {
+
+            left: -15vw;
+            top: -5vh;
+
+            background: linear-gradient(90deg,
+                    transparent,
+                    #58b6ff,
+                    #0099ff,
+                    transparent);
+
+            animation-duration: 24s;
+
+            transform: rotate(8deg);
+
+        }
+
+        .aurora span:nth-child(3) {
+
+            left: -25vw;
+            top: 5vh;
+
+            background: linear-gradient(90deg,
+                    transparent,
+                    #7fd8ff,
+                    #4a90ff,
+                    transparent);
+
+            animation-duration: 30s;
+
+            transform: rotate(-5deg);
+
+        }
+
+        @keyframes auroraMove {
+
+            0% {
+
+                transform:
+                    translateX(-10vw) translateY(0) rotate(-8deg) scaleX(1);
+
+            }
+
+            50% {
+
+                transform:
+                    translateX(10vw) translateY(2vh) rotate(6deg) scaleX(1.2);
+
+            }
+
+            100% {
+
+                transform:
+                    translateX(-5vw) translateY(-2vh) rotate(-10deg) scaleX(.95);
+
+            }
+
+        }
+
+        @keyframes beat {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.08);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="aurora">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div id="stage">
+        <div id="heart">
+            <div id="msg"></div>
+        </div>
+    </div>
+    <script>
+        const heart = document.getElementById("heart"), msg = document.getElementById("msg");
+        const W = heart.clientWidth, H = heart.clientHeight, cx = W / 2, cy = H / 2, s = Math.min(W, H) / 34;
+        let pts = [];
+        for (let t = 0; t < Math.PI * 2; t += 0.08) {
+            let x = 16 * Math.pow(Math.sin(t), 3);
+            let y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+            pts.push([cx + x * s, cy - y * s]);
+        }
+        pts.forEach((p, i) => {
+            let d = document.createElement("div");
+            d.className = "rose"; d.textContent = "🩵";
+            d.style.left = p[0] + "px"; d.style.top = p[1] + "px";
+            heart.appendChild(d);
+            setTimeout(() => { d.style.opacity = 1; d.style.transform = "translate(-50%,-50%) scale(1)"; }, i * 35);
+        });
+        setTimeout(() => {
+            heart.style.animation = "beat 1s infinite";
+            type();
+        }, pts.length * 35 + 800);
+
+        function type() {
+
+            msg.style.opacity = "1";
+
+            const text = "Me haces mucha falta,\neres mi felicidad\ny te amo con toda mi alma novia mía";
+
+            let i = 0;
+
+            function escribir() {
+
+                msg.innerHTML = text.substring(0, i).replace(/\n/g, "<br>");
+
+                if (i < text.length) {
+                    i++;
+                    setTimeout(escribir, 55);
+                }
+
+            }
+
+            escribir();
+        }
+    </script>
+</body>
+
+</html>
