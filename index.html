@@ -332,12 +332,10 @@
         <div class="content">
 
             <div class="text-panel" id="textPanel">
-                <div class="eyebrow">Para ti mi colochita hermosa</div>
                 <p class="message">
                     Te extraño, <em>me haces falta</em> y te <em>amo</em> con toda mi alma.
                     <span class="line-two">Gracias por estar en mi vida y permitirme estar en la tuya.</span>
                 </p>
-                <div class="sign">&mdash; con todo mi amor</div>
             </div>
 
             <div class="heart-wrap">
@@ -493,7 +491,7 @@
 
         const totalDelay = pts.length * stagger + 850;
         const textPanel = document.getElementById('textPanel');
-        setTimeout(() => textPanel.classList.add('reveal'), reduced ? 300 : totalDelay);
+        setTimeout(() => textPanel.classList.add('reveal'), reduced ? 100 : totalDelay);
     </script>
 </body>
 
