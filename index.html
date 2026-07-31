@@ -3,236 +3,470 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Para mi niña</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para ti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,600&family=Playfair+Display:ital,wght@0,600;1,500&family=Poppins:wght@300;400&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --midnight-deep: #060a18;
+            --midnight: #0c1530;
+            --midnight-soft: #16234a;
+            --rose-light: #7fa8d9;
+            --rose-mid: #3f6ea5;
+            --rose-dark: #223c6b;
+            --rose-shadow: #131f3d;
+            --gold: #e8c99b;
+            --ivory: #f3ede0;
+            --star: #cdd9f2;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         html,
         body {
-            margin: 0;
             height: 100%;
-            overflow: hidden;
             background:
-                radial-gradient(circle at top, #153d80 0%, #0b1f44 35%, #050b18 70%, #010204 100%);
-            font-family: Arial, sans-serif
-        }
-
-        #stage {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            height: 100%
-        }
-
-        #heart {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            width: 300px;
-            height: 300px;
-            transform: translate(-50%, -50%);
-        }
-
-        .rose {
-            position: absolute;
-            font-size: 18px;
-            opacity: 0;
-            transition: 1.8s ease;
-            transform: translate(-50%, 220px) scale(.2);
-            filter: drop-shadow(0 0 6px #58a6ff)
-        }
-
-        #msg {
-            position: absolute;
-            left: 50%;
-            top: 55%;
-            transform: translate(-50%, -50%);
-            width: 55%;
-            text-align: center;
-            color: #fff;
-            font-weight: bold;
-            line-height: 1.4;
-            font-size: clamp(14px, 2.8vw, 22px);
-            opacity: 0;
-            transition: opacity 2s;
-            text-shadow: 0 0 10px #69f;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        .show {
-            opacity: 1
-        }
-
-        /* Aurora Boreal */
-
-        .aurora {
-            position: fixed;
-            inset: 0;
+                radial-gradient(ellipse 120% 80% at 50% 0%, var(--midnight-soft) 0%, var(--midnight) 45%, var(--midnight-deep) 100%);
             overflow: hidden;
-            pointer-events: none;
-            z-index: 0;
+            font-family: 'Poppins', sans-serif;
         }
 
-        .aurora span {
+        .stage {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        /* ---------- Estrellas ambientales ---------- */
+        .stars {
             position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
 
-            width: 140vw;
-            height: 45vh;
-
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--star);
             border-radius: 50%;
-
-            filter: blur(55px);
-
-            opacity: .35;
-
-            mix-blend-mode: screen;
-
-            animation: auroraMove 18s ease-in-out infinite alternate;
-
+            opacity: .25;
+            animation: twinkle 4.5s ease-in-out infinite;
         }
 
-        .aurora span:nth-child(1) {
-
-            left: -20vw;
-            top: -15vh;
-
-            background: linear-gradient(90deg,
-                    transparent,
-                    #00d4ff,
-                    #4d7cff,
-                    transparent);
-
-            transform: rotate(-12deg);
-
-        }
-
-        .aurora span:nth-child(2) {
-
-            left: -15vw;
-            top: -5vh;
-
-            background: linear-gradient(90deg,
-                    transparent,
-                    #58b6ff,
-                    #0099ff,
-                    transparent);
-
-            animation-duration: 24s;
-
-            transform: rotate(8deg);
-
-        }
-
-        .aurora span:nth-child(3) {
-
-            left: -25vw;
-            top: 5vh;
-
-            background: linear-gradient(90deg,
-                    transparent,
-                    #7fd8ff,
-                    #4a90ff,
-                    transparent);
-
-            animation-duration: 30s;
-
-            transform: rotate(-5deg);
-
-        }
-
-        @keyframes auroraMove {
-
-            0% {
-
-                transform:
-                    translateX(-10vw) translateY(0) rotate(-8deg) scaleX(1);
-
-            }
-
-            50% {
-
-                transform:
-                    translateX(10vw) translateY(2vh) rotate(6deg) scaleX(1.2);
-
-            }
-
-            100% {
-
-                transform:
-                    translateX(-5vw) translateY(-2vh) rotate(-10deg) scaleX(.95);
-
-            }
-
-        }
-
-        @keyframes beat {
+        @keyframes twinkle {
 
             0%,
             100% {
-                transform: translate(-50%, -50%) scale(1);
+                opacity: .15;
+                transform: scale(1);
             }
 
             50% {
-                transform: translate(-50%, -50%) scale(1.08);
+                opacity: .75;
+                transform: scale(1.6);
+            }
+        }
+
+        /* ---------- Petalos flotantes de fondo ---------- */
+        .petal-fall {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .drift {
+            position: absolute;
+            top: -5%;
+            width: 10px;
+            height: 14px;
+            background: linear-gradient(160deg, var(--rose-light), var(--rose-mid));
+            border-radius: 0 60% 0 60%;
+            opacity: .35;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: .35;
+            }
+
+            90% {
+                opacity: .25;
+            }
+
+            100% {
+                transform: translateY(110vh) translateX(40px) rotate(300deg);
+                opacity: 0;
+            }
+        }
+
+        /* ---------- Layout principal ---------- */
+        .content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+            width: 100%;
+            max-width: 1300px;
+            padding: 5vh 6vw;
+        }
+
+        .text-panel {
+            flex: 0 0 auto;
+            max-width: 420px;
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 1.4s ease, transform 1.4s ease;
+        }
+
+        .text-panel.reveal {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .eyebrow {
+            font-family: 'Poppins', sans-serif;
+            font-size: .72rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: .85;
+            margin-bottom: 1.1rem;
+        }
+
+        .eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 26px;
+            height: 1px;
+            background: var(--gold);
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .message {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: clamp(1.7rem, 2.4vw, 2.35rem);
+            line-height: 1.5;
+            color: var(--ivory);
+            letter-spacing: .01em;
+        }
+
+        .message em {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 500;
+            color: var(--gold);
+        }
+
+        .message .line-two {
+            display: block;
+            margin-top: 1.1rem;
+            font-size: .85em;
+            color: #c9d2e8;
+        }
+
+        .sign {
+            margin-top: 2.3rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--rose-light);
+            opacity: 0;
+            transition: opacity 1.6s ease 1.2s;
+        }
+
+        .text-panel.reveal .sign {
+            opacity: .9;
+        }
+
+        /* ---------- Escenario del corazon ---------- */
+        .heart-wrap {
+            position: relative;
+            flex: 0 0 auto;
+            width: min(58vw, 560px);
+            height: min(58vw, 560px);
+            max-width: 560px;
+            max-height: 560px;
+        }
+
+        .glow {
+            position: absolute;
+            inset: -10%;
+            background: radial-gradient(circle at 50% 55%, rgba(63, 110, 165, .35), transparent 65%);
+            filter: blur(10px);
+            animation: pulse 5s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .55;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .9;
+                transform: scale(1.06);
+            }
+        }
+
+        svg.heart-svg {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .rose-instance {
+            opacity: 0;
+            transform-origin: 0px 0px;
+            transform: scale(0);
+            animation: bloom .85s cubic-bezier(.2, .8, .25, 1) forwards;
+            animation-delay: var(--delay);
+        }
+
+        @keyframes bloom {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.12);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 860px) {
+            .content {
+                flex-direction: column-reverse;
+                gap: 1.5vh;
+                padding: 4vh 6vw;
+            }
+
+            .heart-wrap {
+                width: min(78vw, 420px);
+                height: min(78vw, 420px);
+            }
+
+            .text-panel {
+                max-width: 520px;
+                text-align: center;
+                transform: translateY(24px);
+            }
+
+            .text-panel.reveal {
+                transform: translateY(0);
+            }
+
+            .eyebrow {
+                justify-content: center;
+            }
+
+            .message {
+                font-size: clamp(1.4rem, 5vw, 1.9rem);
+            }
+        }
+
+        /* ---------- Movimiento reducido ---------- */
+        @media (prefers-reduced-motion: reduce) {
+            .rose-instance {
+                animation: none;
+                opacity: 1;
+                transform: scale(1) rotate(var(--rot));
+            }
+
+            .drift,
+            .star,
+            .glow {
+                animation: none;
+            }
+
+            .text-panel {
+                transition: opacity .4s ease;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="aurora">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <div id="stage">
-        <div id="heart">
-            <div id="msg"></div>
+
+    <div class="stage">
+
+        <div class="stars" id="stars"></div>
+        <div class="petal-fall" id="petalFall"></div>
+
+        <div class="content">
+
+            <div class="text-panel" id="textPanel">
+                <div class="eyebrow">Para ti</div>
+                <p class="message">
+                    Te extraño, <em>me haces falta</em> y te <em>amo</em>.
+                    <span class="line-two">Gracias por estar en mi vida y permitirme estar en la tuya.</span>
+                </p>
+                <div class="sign">&mdash; con todo mi cariño</div>
+            </div>
+
+            <div class="heart-wrap">
+                <div class="glow"></div>
+                <svg class="heart-svg" viewBox="0 0 560 560" id="heartSvg"
+                    aria-label="Corazón formado por rosas azules">
+                    <g id="roseField"></g>
+                </svg>
+            </div>
+
         </div>
     </div>
+
     <script>
-        const heart = document.getElementById("heart"), msg = document.getElementById("msg");
-        const W = heart.clientWidth, H = heart.clientHeight, cx = W / 2, cy = H / 2, s = Math.min(W, H) / 34;
-        let pts = [];
-        for (let t = 0; t < Math.PI * 2; t += 0.08) {
-            let x = 16 * Math.pow(Math.sin(t), 3);
-            let y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-            pts.push([cx + x * s, cy - y * s]);
+        let reduced = false;
+        try { reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { }
+
+        /* ---------- Estrellas ---------- */
+        const starsEl = document.getElementById('stars');
+        for (let i = 0; i < 70; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.animationDelay = (Math.random() * 4) + 's';
+            starsEl.appendChild(s);
         }
-        pts.forEach((p, i) => {
-            let d = document.createElement("div");
-            d.className = "rose"; d.textContent = "🩵";
-            d.style.left = p[0] + "px"; d.style.top = p[1] + "px";
-            heart.appendChild(d);
-            setTimeout(() => { d.style.opacity = 1; d.style.transform = "translate(-50%,-50%) scale(1)"; }, i * 35);
-        });
-        setTimeout(() => {
-            heart.style.animation = "beat 1s infinite";
-            type();
-        }, pts.length * 35 + 800);
 
-        function type() {
-
-            msg.style.opacity = "1";
-
-            const text = "Me haces mucha falta,\neres mi felicidad\ny te amo con toda mi alma novia mía";
-
-            let i = 0;
-
-            function escribir() {
-
-                msg.innerHTML = text.substring(0, i).replace(/\n/g, "<br>");
-
-                if (i < text.length) {
-                    i++;
-                    setTimeout(escribir, 55);
-                }
-
+        /* ---------- Petalos cayendo ---------- */
+        if (!reduced) {
+            const fallEl = document.getElementById('petalFall');
+            for (let i = 0; i < 8; i++) {
+                const p = document.createElement('div');
+                p.className = 'drift';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDuration = (14 + Math.random() * 10) + 's';
+                p.style.animationDelay = (Math.random() * 12) + 's';
+                fallEl.appendChild(p);
             }
-
-            escribir();
         }
+
+        /* ---------- Generar puntos dentro de un corazón (formula implicita) ---------- */
+        function heartPoints() {
+            const pts = [];
+            const step = 2.6 / 24;
+            for (let gx = -1.3; gx <= 1.3; gx += step) {
+                for (let gy = -1.3; gy <= 1.35; gy += step) {
+                    const x = gx + (Math.random() - 0.5) * 0.045;
+                    const y = gy + (Math.random() - 0.5) * 0.045;
+                    const f = Math.pow(x * x + y * y - 1, 3) - x * x * Math.pow(y, 3);
+                    if (f <= 0) pts.push({ x, y });
+                }
+            }
+            // recorte aleatorio a una densidad agradable
+            const target = 150;
+            while (pts.length > target) {
+                pts.splice(Math.floor(Math.random() * pts.length), 1);
+            }
+            return pts;
+        }
+
+        const palette = [
+            { outer: '#8fb4e0', inner: '#3f6ea5', core: '#e8c99b' },
+            { outer: '#6f97cf', inner: '#2b4d85', core: '#f3ede0' },
+            { outer: '#5b84bd', inner: '#223c6b', core: '#e8c99b' },
+            { outer: '#7fa8d9', inner: '#33578f', core: '#cdd9f2' }
+        ];
+
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const field = document.getElementById('roseField');
+        const size = 560;
+        const cx = size / 2, cy = size * 0.47, scale = size * 0.40;
+
+        const outerPetalD = "M0,-4 C -16,-16 -14,-38 0,-48 C 14,-38 16,-16 0,-4 Z";
+        const innerPetalD = "M0,-2 C -9,-10 -8,-24 0,-30 C 8,-24 9,-10 0,-2 Z";
+
+        function makeRose(c) {
+            const g = document.createElementNS(svgNS, 'g');
+            [0, 60, 120, 180, 240, 300].forEach(deg => {
+                const p = document.createElementNS(svgNS, 'path');
+                p.setAttribute('d', outerPetalD);
+                p.setAttribute('fill', c.outer);
+                p.setAttribute('transform', 'rotate(' + deg + ')');
+                g.appendChild(p);
+            });
+            [30, 90, 150, 210, 270, 330].forEach(deg => {
+                const p = document.createElementNS(svgNS, 'path');
+                p.setAttribute('d', innerPetalD);
+                p.setAttribute('fill', c.inner);
+                p.setAttribute('transform', 'rotate(' + deg + ')');
+                g.appendChild(p);
+            });
+            const core = document.createElementNS(svgNS, 'circle');
+            core.setAttribute('r', '5.5');
+            core.setAttribute('fill', c.core);
+            g.appendChild(core);
+            return g;
+        }
+
+        const pts = heartPoints().map(p => ({
+            px: cx + p.x * scale,
+            py: cy - p.y * scale,
+            d: Math.hypot(p.x, p.y)
+        })).sort((a, b) => a.d - b.d);
+
+        const stagger = reduced ? 0 : 16;
+
+        pts.forEach((p, i) => {
+            const c = palette[Math.floor(Math.random() * palette.length)];
+            const r = 15 + Math.random() * 13;
+            const sizeScale = r / 48;
+            const rot = Math.floor(Math.random() * 360);
+
+            const placer = document.createElementNS(svgNS, 'g');
+            placer.setAttribute('transform',
+                'translate(' + p.px + ',' + p.py + ') rotate(' + rot + ') scale(' + sizeScale + ')');
+
+            const anim = document.createElementNS(svgNS, 'g');
+            anim.classList.add('rose-instance');
+            anim.style.setProperty('--delay', (i * stagger) + 'ms');
+            anim.appendChild(makeRose(c));
+
+            placer.appendChild(anim);
+            field.appendChild(placer);
+        });
+
+        const totalDelay = pts.length * stagger + 850;
+        const textPanel = document.getElementById('textPanel');
+        setTimeout(() => textPanel.classList.add('reveal'), reduced ? 300 : totalDelay);
     </script>
 </body>
 
